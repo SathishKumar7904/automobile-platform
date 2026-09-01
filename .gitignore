@@ -1,0 +1,75 @@
+# ============================================
+# Automobile Digital Platform
+# Git Ignore Configuration
+# ============================================
+
+# ---------- Operating System ----------
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# ---------- IDE / Editor ----------
+
+# Visual Studio Code
+.vscode/
+
+# IntelliJ IDEA
+.idea/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# ---------- Java / Maven ----------
+
+# Maven build output
+target/
+
+# Java compiled files
+*.class
+
+# ---------- Node / Angular ----------
+
+# Node dependencies
+node_modules/
+
+# Angular build output
+dist/
+
+# Angular cache
+.angular/
+
+# npm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ---------- Environment / Secrets ----------
+
+.env
+.env.*
+!.env.example
+
+# ---------- Logs ----------
+
+*.log
+
+# ---------- Temporary Files ----------
+
+*.tmp
+*.temp
+
+# ---------- Coverage ----------
+
+coverage/
+
+# ---------- OS / Tool Generated ----------
+
+*.swp
+*.swo
