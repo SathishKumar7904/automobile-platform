@@ -11,11 +11,11 @@ This repository contains the application implementation and supporting project i
 ## Repository Structure
 
 automobile-platform/
-├── docs/              # Project and implementation documentation
-├── frontend/          # Angular frontend application
-├── services/          # Backend services
-├── infrastructure/    # Local and deployment infrastructure
-└── tests/             # Cross-component and end-to-end tests
+├── docs/ # Project and implementation documentation
+├── frontend/ # Angular frontend application
+├── services/ # Backend services
+├── infrastructure/ # Local and deployment infrastructure
+└── tests/ # Cross-component and end-to-end tests
 
 ```
 ## Technology Stack
@@ -59,3 +59,10 @@ Phase 1 — Requirement Engineering: Completed
 Phase 2 — System Design: Completed
 
 Phase 3 — Application Implementation: In Progress
+
+
+
+
+mvn clean test -DargLine="-Duser.timezone=UTC"
+mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Duser.timezone=UTC"
+```
