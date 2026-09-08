@@ -2,7 +2,9 @@ package com.automobile.vehicle.controller;
 
 import java.util.List;
 import java.util.UUID;
+import java.math.BigDecimal;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +51,27 @@ public class VehicleCatalogController {
         );
     }
 
+    @GetMapping("/variants/search")
+    public ResponseEntity<List<VehicleVariantResponse>> searchVariants(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String bodyType,
+            @RequestParam(required = false) String fuelType,
+            @RequestParam(required = false) String transmission,
+            @RequestParam(required = false) BigDecimal minPrice,
+            @RequestParam(required = false) BigDecimal maxPrice
+    ) {
+        return ResponseEntity.ok(
+                vehicleCatalogService.searchActiveVariants(
+                        name,
+                        bodyType,
+                        fuelType,
+                        transmission,
+                        minPrice,
+                        maxPrice
+                )
+        );
+    }
+
     @GetMapping("/variants/{variantId}")
     public ResponseEntity<VehicleVariantResponse> getVariant(
             @PathVariable @NotNull UUID variantId
@@ -57,4 +80,5 @@ public class VehicleCatalogController {
                 vehicleCatalogService.getActiveVariant(variantId)
         );
     }
+
 }
