@@ -1,0 +1,11 @@
+package com.automobile.vehicle.brand;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BrandRepository extends JpaRepository<Brand, UUID> {
+
+    List<Brand> findAllByActiveTrueOrderByNameAsc();
+}
