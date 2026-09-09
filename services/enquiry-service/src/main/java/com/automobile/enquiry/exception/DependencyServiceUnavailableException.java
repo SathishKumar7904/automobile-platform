@@ -1,0 +1,2 @@
+package com.automobile.enquiry.exception;
+public class DependencyServiceUnavailableException extends RuntimeException { public DependencyServiceUnavailableException(String service,Throwable cause){super(service+" is unavailable",cause);} }
