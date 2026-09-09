@@ -1,0 +1,2 @@
+package com.automobile.enquiry.exception;
+public class ReferencedResourceNotFoundException extends RuntimeException { public ReferencedResourceNotFoundException(String resource,Object id){super(resource+" not found: "+id);} }
