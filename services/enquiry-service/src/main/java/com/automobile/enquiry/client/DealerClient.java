@@ -13,7 +13,7 @@ import com.automobile.enquiry.exception.ReferencedResourceNotFoundException;
 @Component
 public class DealerClient {
     private final RestClient client;
-    public DealerClient(RestClient.Builder builder, EnquiryServiceUrls urls) { this.client=builder.baseUrl(urls.dealerBaseUrl()).build(); }
+    public DealerClient(RestClient.Builder builder, EnquiryServiceUrls urls) { this.client=builder.baseUrl(urls.getDealerBaseUrl()).build(); }
     public void validateDealer(UUID dealerId) {
         try {
             client.get().uri("/api/dealers/{id}",dealerId).retrieve().body(DealerResponse.class);

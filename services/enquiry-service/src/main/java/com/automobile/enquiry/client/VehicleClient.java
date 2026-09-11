@@ -11,7 +11,7 @@ import com.automobile.enquiry.exception.ReferencedResourceNotFoundException;
 @Component
 public class VehicleClient {
     private final RestClient client;
-    public VehicleClient(RestClient.Builder builder, EnquiryServiceUrls urls) { this.client=builder.baseUrl(urls.vehicleBaseUrl()).build(); }
+    public VehicleClient(RestClient.Builder builder, EnquiryServiceUrls urls) { this.client=builder.baseUrl(urls.getVehicleBaseUrl()).build(); }
     public void validateVariant(UUID variantId) {
         try {
             client.get().uri("/api/vehicles/variants/{id}",variantId).retrieve().body(VehicleVariantResponse.class);
