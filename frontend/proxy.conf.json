@@ -1,22 +1,7 @@
 {
-  "/api/vehicles": {
-    "target": "http://localhost:8081",
-    "secure": false,
-    "changeOrigin": true
-  },
-  "/api/dealers": {
-    "target": "http://localhost:8082",
-    "secure": false,
-    "changeOrigin": true
-  },
-  "/api/enquiries": {
-    "target": "http://localhost:8083",
-    "secure": false,
-    "changeOrigin": true
-  },
-  "/api/leads": {
-    "target": "http://localhost:8083",
-    "secure": false,
-    "changeOrigin": true
-  }
+  "/api/vehicles": { "target": "http://localhost:8081", "secure": false, "changeOrigin": true },
+  "/api/dealers": { "target": "http://localhost:8082", "secure": false, "changeOrigin": true },
+  "/api/dealer-vehicles": { "target": "http://localhost:8082", "secure": false, "changeOrigin": true, "pathRewrite": { "^/api/dealer-vehicles": "/api/vehicles" } },
+  "/api/enquiries": { "target": "http://localhost:8083", "secure": false, "changeOrigin": true },
+  "/api/leads": { "target": "http://localhost:8083", "secure": false, "changeOrigin": true }
 }
