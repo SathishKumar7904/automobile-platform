@@ -4,34 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../api.service';
 import { Brand, VehicleModel, VehicleVariant, Dealer } from '../models';
-
-@Component({
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  template: `
-    <section class="page-heading"><span class="eyebrow">CUSTOMER</span><h1>Create an Enquiry</h1><p>Choose the vehicle and dealer you want to contact.</p></section>
-    <form class="card form" (ngSubmit)="submit()" #form="ngForm">
-      <div class="field"><label>Customer ID</label><input name="customerId" [(ngModel)]="customerId" required></div>
-      <div class="field"><label>Brand</label><select name="brand" [(ngModel)]="brandId" (ngModelChange)="loadModels($event)" required><option value="">Select brand</option><option *ngFor="let b of brands" [value]="b.id">{{ b.name }}</option></select></div>
-      <div class="field"><label>Model</label><select name="model" [(ngModel)]="modelId" (ngModelChange)="loadVariants($event)" [disabled]="!brandId" required><option value="">Select model</option><option *ngFor="let m of models" [value]="m.id">{{ m.name }}</option></select></div>
-      <div class="field"><label>Variant</label><select name="variant" [(ngModel)]="variantId" (ngModelChange)="loadDealers($event)" [disabled]="!modelId" required><option value="">Select variant</option><option *ngFor="let v of variants" [value]="v.id">{{ v.name }} · {{ v.fuelType }} · {{ v.transmission }}</option></select></div>
-      <div class="field"><label>Dealer</label><select name="dealer" [(ngModel)]="dealerId" [disabled]="!variantId" required><option value="">Select dealer</option><option *ngFor="let d of dealers" [value]="d.id">{{ d.name }} — {{ d.city }}</option></select></div>
-      <div class="field full"><label>Message <span class="muted">optional</span></label><textarea name="message" [(ngModel)]="message" maxlength="2000" rows="5" placeholder="Tell the dealer what you are looking for..."></textarea></div>
-      <div class="error" *ngIf="error">{{ error }}</div>
-      <div class="success" *ngIf="success">{{ success }}</div>
-      <button class="button primary" type="submit" [disabled]="form.invalid || submitting">{{ submitting ? 'Submitting…' : 'Submit Enquiry' }}</button>
-    </form>
-  `
-})
-export class EnquiryCreateComponent {
-  private readonly api = inject(ApiService); private readonly router = inject(Router);
-  customerId = 'be019186-e22f-4cb9-9b74-104343f490f7'; brandId = ''; modelId = ''; variantId = ''; dealerId = ''; message = '';
-  brands: Brand[] = []; models: VehicleModel[] = []; variants: VehicleVariant[] = []; dealers: Dealer[] = [];
-  error = ''; success = ''; submitting = false;
-  constructor() { this.api.brands().subscribe({ next: x => this.brands = x, error: e => this.error = this.messageOf(e) }); }
-  loadModels(id: string) { this.modelId = ''; this.variantId = ''; this.dealerId = ''; this.models=[]; this.variants=[]; this.dealers=[]; if (id) this.api.models(id).subscribe({next:x=>this.models=x,error:e=>this.error=this.messageOf(e)}); }
-  loadVariants(id: string) { this.variantId=''; this.dealerId=''; this.variants=[]; this.dealers=[]; if(id) this.api.variants(id).subscribe({next:x=>this.variants=x,error:e=>this.error=this.messageOf(e)}); }
-  loadDealers(id: string) { this.dealerId=''; this.dealers=[]; if(id) this.api.dealersForVariant(id).subscribe({next:x=>this.dealers=x,error:e=>this.error=this.messageOf(e)}); }
-  submit() { this.error=''; this.success=''; this.submitting=true; this.api.createEnquiry({customerId:this.customerId.trim(),variantId:this.variantId,dealerId:this.dealerId,message:this.message.trim() || undefined}).subscribe({next:r=>{this.submitting=false; this.success=`Enquiry ${r.enquiryId} created. Lead ${r.leadId} is now ${r.status}.`; setTimeout(()=>this.router.navigate(['/customer/enquiries',r.enquiryId]),500);},error:e=>{this.submitting=false;this.error=this.messageOf(e);}}); }
-  private messageOf(e: any): string { return e?.error?.message || e?.error?.error || 'Unable to complete the request. Check that the backend services are running.'; }
-}
+@Component({standalone:true,imports:[CommonModule,FormsModule],template:`
+<section class="page-heading"><span class="eyebrow">CUSTOMER</span><h1>Create an Enquiry</h1><p>Choose the vehicle and dealer you want to contact.</p></section>
+<form class="card form" (ngSubmit)="submit()" #form="ngForm"><div class="field"><label>Customer ID</label><input name="customerId" [(ngModel)]="customerId" required></div><div class="field"><label>Brand</label><select name="brand" [(ngModel)]="brandId" (ngModelChange)="loadModels($event)" required><option value="">Select brand</option><option *ngFor="let b of brands" [value]="b.id">{{b.name}}</option></select></div><div class="field"><label>Model</label><select name="model" [(ngModel)]="modelId" (ngModelChange)="loadVariants($event)" [disabled]="!brandId" required><option value="">Select model</option><option *ngFor="let m of models" [value]="m.id">{{m.name}}</option></select></div><div class="field"><label>Variant</label><select name="variant" [(ngModel)]="variantId" (ngModelChange)="loadDealers($event)" [disabled]="!modelId" required><option value="">Select variant</option><option *ngFor="let v of variants" [value]="v.id">{{v.name}} · {{v.fuelType}} · {{v.transmission}}</option></select></div><div class="field"><label>Dealer</label><select name="dealer" [(ngModel)]="dealerId" [disabled]="!variantId" required><option value="">Select dealer</option><option *ngFor="let d of dealers" [value]="d.id">{{d.name}} — {{d.city}}</option></select></div><div class="field full"><label>Message <span class="muted">optional</span></label><textarea name="message" [(ngModel)]="message" maxlength="2000" rows="5" placeholder="Tell the dealer what you are looking for..."></textarea></div><div class="error" *ngIf="error">{{error}}</div><div class="success" *ngIf="success">{{success}}</div><button class="button primary" type="submit" [disabled]="form.invalid||submitting">{{submitting?'Submitting…':'Submit Enquiry'}}</button></form>
+`})
+export class EnquiryCreateComponent { private readonly api=inject(ApiService);private readonly router=inject(Router);customerId='be019186-e22f-4cb9-9b74-104343f490f7';brandId='';modelId='';variantId='';dealerId='';message='';brands:Brand[]=[];models:VehicleModel[]=[];variants:VehicleVariant[]=[];dealers:Dealer[]=[];error='';success='';submitting=false;constructor(){this.api.brands().subscribe({next:x=>this.brands=x,error:e=>this.error=this.messageOf(e)})}loadModels(id:string){this.modelId='';this.variantId='';this.dealerId='';this.models=[];this.variants=[];this.dealers=[];if(id)this.api.models(id).subscribe({next:x=>this.models=x,error:e=>this.error=this.messageOf(e)})}loadVariants(id:string){this.variantId='';this.dealerId='';this.variants=[];this.dealers=[];if(id)this.api.variants(id).subscribe({next:x=>this.variants=x,error:e=>this.error=this.messageOf(e)})}loadDealers(id:string){this.dealerId='';this.dealers=[];if(id)this.api.dealersForVariant(id).subscribe({next:x=>this.dealers=x,error:e=>this.error=this.messageOf(e)})}submit(){this.error='';this.success='';this.submitting=true;this.api.createEnquiry({customerId:this.customerId.trim(),variantId:this.variantId,dealerId:this.dealerId,message:this.message.trim()||undefined}).subscribe({next:r=>{this.submitting=false;this.success=`Enquiry ${r.enquiryId} created. Lead ${r.leadId} is now ${r.leadStatus}.`;setTimeout(()=>this.router.navigate(['/customer/enquiries',r.enquiryId]),500)},error:e=>{this.submitting=false;this.error=this.messageOf(e)}})}private messageOf(e:any){return e?.error?.message||e?.error?.error||'Unable to complete the request. Check that the backend services are running.'}}
